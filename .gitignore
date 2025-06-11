@@ -1,0 +1,45 @@
+gpt-discussion/.gitignore
+# Ambiente
+.env
+.env.*
+!.env.example
+
+# Output/Cache Build
+dist/
+bun.lockb
+bunfig.toml
+*.log
+*.tsbuildinfo
+.cache/
+*.cache/
+.cache
+.DS_Store
+
+# Node modules standard (se compatibilità)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor/IDE
+.vscode/
+.idea/
+*.swp
+
+# Test e temporanei
+coverage/
+*.tmp
+*.temp
+
+# Output temporanei
+output/
+out/
+
+# TypeScript
+*.tsbuildinfo
+
+# Altro
+*.bak
+*.orig
+
+output_script.txt
