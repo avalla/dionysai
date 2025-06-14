@@ -43,8 +43,8 @@ Craft a scene by selecting your cast, set a topic, pick the global language, and
 
 1. **Clone the repository**
    ```bash
-   git clone [YOUR_REPO_URL]
-   cd dionysai
+   git clone https://github.com/avalla/gpt-theatre.git
+   cd gpt-theatre
    ```
 
 2. **Setup your environment**
@@ -56,7 +56,6 @@ Craft a scene by selecting your cast, set a topic, pick the global language, and
 
    ```bash
    bun install
-   bun add ink-text-input
    ```
 
 4. **Add your actor JSON files to the `/cast/` directory**  

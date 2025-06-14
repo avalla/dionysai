@@ -1,12 +1,12 @@
 {
-  "name": "dionysai",
+  "name": "gpt-theathre",
   "version": "1.0.0",
   "description": "CLI app where AI actors will talks between them in virtual theatre",
   "license": "MIT",
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "https://github.com/avalla/dionysai.git"
+    "url": "https://github.com/avalla/gpt-theathre.git"
   },
   "scripts": {
     "dev": "bun run src/index.tsx",
@@ -22,7 +22,8 @@
     "ink": "^6.0.0",
     "ink-text-input": "^6.0.0",
     "langchain": "^0.3.27",
-    "react": "^19.1.0"
+    "react": "^19.1.0",
+    "say": "^0.16.0"
   },
   "devDependencies": {
     "typescript": "^5.8.3",

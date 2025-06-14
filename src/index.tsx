@@ -4,6 +4,7 @@ import TextInput from "ink-text-input";
 import fs from "fs";
 import path from "path";
 import Actor from "../lib/Actor.js";
+import ConversationManager from "../lib/ConversationManager";
 import ConversationRound from "../components/ConversationRound.js";
 import { saveScriptToFile } from "../lib/saveScriptToFile.js";
 
@@ -311,7 +312,7 @@ const App = () => {
           <Text color="yellow">{setup.autoMode ? "Automatic" : "Manual"}</Text>
         </Text>
         <Text>
-          Language: <Text color="yellow">{setup.language}</Text>
+          Language: <Text color="yellow">it</Text>
         </Text>
         <Text>
           Topic: <Text color="magenta">{setup.topic}</Text>

@@ -1,20 +1,10 @@
-import React, { useState, useCallback } from "react";
-import { Box, Text, useApp, useInput } from "ink";
-import type Actor from "../lib/Actor.js";
-import type { ConversationTurn, ConversationManagerOptions } from "../lib/ConversationManager.js";
+import React, { useState } from "react";
+import { Box, Text, useApp } from "ink";
+import { speak } from "../lib/tts.js";
 import ConversationManager from "../lib/ConversationManager.js";
 import ActorDisplay from "./ActorDisplay.js";
 
-interface ConversationRoundProps {
-	actors: Actor[];
-	initialContext?: string;
-	turnOrder?: string[];
-	maxTurns?: number;
-	onEnd?: (history: ConversationTurn[]) => void;
-	autoMode?: boolean; // auto-play senza premere invio ad ogni risposta
-}
-
-const ConversationRound: React.FC<ConversationRoundProps & { profiles?: string[], languages?: string[] }> = ({
+const ConversationRound: React.FC<ConversationRoundProps & { profiles?: string[], languages?: string[], ttsEnabled?: boolean }> = ({
 	actors,
 	initialContext,
 	turnOrder,
@@ -22,7 +12,8 @@ const ConversationRound: React.FC<ConversationRoundProps & { profiles?: string[]
 	onEnd,
 	autoMode = false,
 	profiles = [],
-	languages = []
+	languages = [],
+	ttsEnabled = true // <-- nuova prop opzionale
 }) => {
 	const { exit } = useApp();
 	const [manager] = useState(
@@ -33,9 +24,23 @@ const ConversationRound: React.FC<ConversationRoundProps & { profiles?: string[]
 	const [status, setStatus] = useState<"idle" | "thinking" | "done">("idle");
 	const [turnIndex, setTurnIndex] = useState<number>(0);
 
-	const playNextTurn = useCallback(async () => {
+	// Lock per evitare sovrapposizione turni
+	const isPlayingRef = React.useRef(false);
+
+	const playNextTurn = React.useCallback(async () => {
+		if (isPlayingRef.current || status === "thinking" || status === "done") return;
+		isPlayingRef.current = true;
 		setStatus("thinking");
 		const turn = await manager.playTurn(currentMessage);
+
+		if (ttsEnabled && turn.response) {
+			try {
+				await speak(turn.response);
+			} catch (err) {
+				// Ignora errori TTS per ora
+			}
+		}
+
 		setHistory(prevHistory => {
 			const newHistory = [...prevHistory, turn];
 			setCurrentMessage(turn.response ?? "");
@@ -49,17 +54,18 @@ const ConversationRound: React.FC<ConversationRoundProps & { profiles?: string[]
 			}
 			return newHistory;
 		});
+		isPlayingRef.current = false;
 		// eslint-disable-next-line
-	}, [manager, currentMessage, maxTurns, exit, onEnd]);
+	}, [manager, currentMessage, maxTurns, exit, onEnd, ttsEnabled, status]);
 
 	// Si avanza con SPAZIO o ENTER, si annulla con ESC/Q (solo se non in autoMode)
-	useInput((input, key) => {
+	require("ink").useInput((input, key) => {
 		if (autoMode) return;
 		if (key.escape || input.toLowerCase() === "q") {
 			exit();
 		}
 		if (key.return || input === " ") {
-			if (status === "idle") playNextTurn();
+			if (status === "idle" && !isPlayingRef.current) playNextTurn();
 		}
 	});
 
@@ -73,7 +79,7 @@ const ConversationRound: React.FC<ConversationRoundProps & { profiles?: string[]
 	// Effect: in autoMode, avanza automaticamente ogni turno dopo che lo status torna idle e non è ancora finito
 	React.useEffect(() => {
 		if (!autoMode) return;
-		if (status === "idle" && turnIndex < maxTurns) {
+		if (status === "idle" && turnIndex < maxTurns && !isPlayingRef.current) {
 			playNextTurn();
 		}
 	}, [autoMode, status, turnIndex, maxTurns, playNextTurn]);
