@@ -2,7 +2,7 @@
   "lockfileVersion": 1,
   "workspaces": {
     "": {
-      "name": "dionysai",
+      "name": "GPT-Theatre",
       "dependencies": {
         "@huggingface/inference": "^4.0.4",
         "@langchain/anthropic": "^0.3.21",

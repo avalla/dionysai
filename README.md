@@ -1,4 +1,4 @@
-# 🎭 DionysAI
+# 🎭 GPT-Theatre
 
 ![Language](https://img.shields.io/badge/language-TypeScript-blue?style=flat-square)
 ![Terminal UI](https://img.shields.io/badge/UI-React%20Ink-lightgrey?style=flat-square)
@@ -7,9 +7,9 @@
 
 ---
 
-## 🧠 What is DionysAI?
+## 🧠 What is GPT-Theatre?
 
-DionysAI is a terminal-based stage where multiple AI actors — each loaded from JSON "cast files" — improvise, debate, ask questions and surprise you.  
+GPT-Theatre is a terminal-based stage where multiple AI actors — each loaded from JSON "cast files" — improvise, debate, ask questions and surprise you.  
 Craft a scene by selecting your cast, set a topic, pick the global language, and experience fully creative, focused, and interactive AI-driven dialogue.
 
 ---
@@ -107,7 +107,7 @@ Each actor’s profile/personality is always loaded from their JSON, never chose
 
 ## 📄 Output
 
-At the end, DionysAI automatically creates:
+At the end, GPT-Theatre automatically creates:
 
 * `output_script.txt`
    * Topic
@@ -145,5 +145,5 @@ MIT License — use freely, remix creatively.
 
 ---
 
-> **DionysAI** — The world is your stage.  
+> **GPT-Theatre** — The world is your stage.  
 

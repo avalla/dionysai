@@ -302,7 +302,7 @@ const App = () => {
         margin={1}
       >
         <Text color="greenBright" bold>
-          🎭 DionysAI — Setup Summary 🎭
+          🎭 GPT-Theatre — Setup Summary 🎭
         </Text>
         <Text>
           Turns: <Text color="yellow">{setup.maxTurns}</Text>
